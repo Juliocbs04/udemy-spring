@@ -1,5 +1,6 @@
 package guru.spring.springwebapp.domain.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Livro {
@@ -16,14 +18,16 @@ public class Livro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	private String titulo;
 	private String isbn;
-	
+
 	@ManyToMany
-	@JoinTable(name = "livro_autor", joinColumns= @JoinColumn(name = "livro_id"),
-	inverseJoinColumns = @JoinColumn(name = "autor_id"))
-	private Set<Autor> autores;
+	@JoinTable(name = "livro_autor", joinColumns = @JoinColumn(name = "id_livro"), inverseJoinColumns = @JoinColumn(name = "id_autor"))
+	private Set<Autor> autores = new HashSet<>();
+
+	@ManyToOne
+	private Editora editora;
 
 	public String getTitulo() {
 		return titulo;
@@ -31,6 +35,22 @@ public class Livro {
 
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Editora getEditora() {
+		return editora;
+	}
+
+	public void setEditora(Editora editora) {
+		this.editora = editora;
 	}
 
 	public String getIsbn() {
@@ -78,8 +98,5 @@ public class Livro {
 	public String toString() {
 		return "Livro [id=" + id + ", titulo=" + titulo + ", isbn=" + isbn + ", autores=" + autores + "]";
 	}
-	
-	
-	
 
 }

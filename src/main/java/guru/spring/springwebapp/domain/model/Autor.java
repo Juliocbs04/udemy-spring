@@ -1,5 +1,6 @@
 package guru.spring.springwebapp.domain.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -18,7 +19,7 @@ public class Autor {
 	private String ultimoNome;
 	
 	@ManyToMany(mappedBy="autores")
-	private Set<Livro> livros;
+	private Set<Livro> livros = new HashSet<>();
 
 	public Long getId() {
 		return id;
